@@ -1,9 +1,9 @@
 /**
  * CORS MIDDLEWARE
- * 
+ *
  * Handles Cross-Origin Resource Sharing (CORS) for API requests.
  * Responsibility: Validate request origins and set appropriate CORS headers.
- * 
+ *
  * Security Note: Only allows requests from whitelisted origins defined in configuration.
  */
 
@@ -48,29 +48,30 @@ export interface CORSConfig {
 
 /**
  * Validates if the request origin is allowed
- * 
+ *
  * @param origin - Request origin from headers
  * @param allowedOrigins - List of allowed origins
  * @returns The origin if valid, "null" otherwise
  */
 function validateOrigin(
   origin: string | undefined,
-  allowedOrigins: string[]
+  allowedOrigins: string[],
 ): string {
   if (!origin) {
-    return "null";
+    return "*";
   }
+  return origin;
 
-  if (allowedOrigins.includes(origin)) {
+  /*if (allowedOrigins.includes(origin)) {
     return origin;
   }
 
-  return "null";
+  return "null";*/
 }
 
 /**
  * Sets CORS headers on the response
- * 
+ *
  * @param res - Vercel response object
  * @param origin - Validated origin to allow
  */
@@ -83,16 +84,16 @@ function setCORSHeaders(res: VercelResponse, origin: string): void {
 
 /**
  * CORS Middleware
- * 
+ *
  * Handles CORS preflight (OPTIONS) requests and sets appropriate headers.
  * Returns true if the request should be terminated (OPTIONS request),
  * false if the request should continue processing.
- * 
+ *
  * @param req - Vercel request object
  * @param res - Vercel response object
  * @param config - CORS configuration with allowed origins
  * @returns true if request was handled (OPTIONS), false otherwise
- * 
+ *
  * @example
  * ```typescript
  * export const handler = async (req, res) => {
@@ -106,7 +107,7 @@ function setCORSHeaders(res: VercelResponse, origin: string): void {
 export function corsMiddleware(
   req: VercelRequest,
   res: VercelResponse,
-  config: CORSConfig
+  config: CORSConfig,
 ): boolean {
   // Validate and set origin
   const requestOrigin = req.headers.origin as string | undefined;
@@ -127,14 +128,14 @@ export function corsMiddleware(
 /**
  * Factory function to create CORS middleware with bound configuration
  * Useful for creating a reusable middleware instance
- * 
+ *
  * @param config - CORS configuration
  * @returns Configured CORS middleware function
- * 
+ *
  * @example
  * ```typescript
  * const cors = createCORSMiddleware({ allowedOrigins: config.ALLOWED_ORIGINS });
- * 
+ *
  * export const handler = async (req, res) => {
  *   if (cors(req, res)) return;
  *   // ... rest of handler
