@@ -30,7 +30,7 @@ const DEFAULT_ALLOWED_ORIGINS = [
 /**
  * Default AI model name
  */
-const DEFAULT_MODEL_NAME = "gemini-1.5-flash";
+const DEFAULT_MODEL_NAME = "gemini-1.5-flash-001";
 
 /**
  * Validates and retrieves the GEMINI_API_KEY from environment
