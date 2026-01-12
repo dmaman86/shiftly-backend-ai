@@ -58,15 +58,14 @@ function validateOrigin(
   allowedOrigins: string[],
 ): string {
   if (!origin) {
-    return "*";
+    return "null";
   }
-  return origin;
 
-  /*if (allowedOrigins.includes(origin)) {
+  if (allowedOrigins.includes(origin)) {
     return origin;
   }
 
-  return "null";*/
+  return "null";
 }
 
 /**

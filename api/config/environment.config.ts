@@ -1,9 +1,9 @@
 /**
  * ENVIRONMENT CONFIGURATION MODULE
- * 
+ *
  * Centralizes all environment variable access and validation.
  * Responsibility: Provide type-safe access to configuration values with validation.
- * 
+ *
  * Environment Variables Required:
  * - GEMINI_API_KEY: Google Generative AI API key (required)
  * - ALLOWED_ORIGINS: Comma-separated list of allowed CORS origins (optional, has defaults)
@@ -23,8 +23,8 @@ interface AppConfig {
  * Used when ALLOWED_ORIGINS environment variable is not set
  */
 const DEFAULT_ALLOWED_ORIGINS = [
-  "https://dmaman86.github.io/shiftly",
-  "http://localhost:5173/shiftly",
+  "https://dmaman86.github.io",
+  "http://localhost:5173",
 ];
 
 /**
@@ -38,14 +38,14 @@ const DEFAULT_MODEL_NAME = "gemini-1.5-flash";
  */
 function getApiKey(): string {
   const apiKey = process.env.GEMINI_API_KEY;
-  
+
   if (!apiKey || apiKey.trim() === "") {
     throw new Error(
       "GEMINI_API_KEY environment variable is required but not set. " +
-      "Please configure your API key in the environment."
+        "Please configure your API key in the environment.",
     );
   }
-  
+
   return apiKey.trim();
 }
 
@@ -55,16 +55,16 @@ function getApiKey(): string {
  */
 function getAllowedOrigins(): string[] {
   const originsEnv = process.env.ALLOWED_ORIGINS;
-  
+
   if (!originsEnv || originsEnv.trim() === "") {
     return DEFAULT_ALLOWED_ORIGINS;
   }
-  
+
   // Parse comma-separated list and trim whitespace
   return originsEnv
     .split(",")
-    .map(origin => origin.trim())
-    .filter(origin => origin.length > 0);
+    .map((origin) => origin.trim())
+    .filter((origin) => origin.length > 0);
 }
 
 /**
@@ -73,11 +73,11 @@ function getAllowedOrigins(): string[] {
  */
 function getModelName(): string {
   const modelName = process.env.AI_MODEL_NAME;
-  
+
   if (!modelName || modelName.trim() === "") {
     return DEFAULT_MODEL_NAME;
   }
-  
+
   return modelName.trim();
 }
 
